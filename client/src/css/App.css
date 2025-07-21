@@ -1,0 +1,31 @@
+body {
+    background-color:ghostwhite !important;
+    min-height:100vh;
+}
+
+main {
+    max-width: 700px;
+    margin:0 auto;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+a {
+    text-decoration: none !important;
+    color : inherit;
+}
+
+/* .header, .footer {
+    background-color: wheat;
+} */
+
+.linker:hover {
+    border-bottom: 2px solid black;
+    
+}
+
+
+
+
+
+

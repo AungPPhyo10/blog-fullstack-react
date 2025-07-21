@@ -1,0 +1,69 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import Navbar from 'react-bootstrap/Navbar';
+import Nav from 'react-bootstrap/Nav';
+import { Link } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import {UserContext} from '../context/UserContext.jsx';
+import {useNavigate} from 'react-router-dom';
+
+const Header = () => {
+  const {userInfo, setUserInfo} = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/profile', {
+      method: 'GET',
+      credentials: 'include',
+    })
+    .then(response => {
+      response.json().then(userInfo => 
+        setUserInfo(userInfo)
+      )
+    })
+
+  }, [])
+
+  // log out functionality
+  function logout() {
+    fetch('http://localhost:3000/api/logout', {
+      method: 'GET',
+      credentials: 'include'
+    })
+    .then(() => {
+      setUserInfo(null);
+      navigate('/');
+    })
+    .catch(error => console.log(error)) 
+  }
+
+  return (
+    <div className="pb-4">
+      <Navbar className="px-4 border-1 header" >
+          <Navbar.Brand as={Link} className="fw-bold linker" to="/">
+            Blogzz
+          </Navbar.Brand>
+          <Nav className="ms-auto">
+            {/* use as property to make the react-bootstrap components behaviours */}
+            
+            {userInfo && (
+              <>
+                <Nav.Link as={Link} to="create" className="linker me-1">Create Post</Nav.Link>
+                <Nav.Link onClick={logout} className="linker me-1 text-danger fw-bold">Log Out</Nav.Link>
+              </>
+            )}
+
+            {!userInfo && (
+              <>
+                <Nav.Link as={Link} to="/login" className="linker me-1">Login</Nav.Link>
+                <Nav.Link as={Link} to="/register" className="linker">Register</Nav.Link>
+              </>
+            )}
+
+          </Nav>
+      </Navbar>
+    </div>
+  )
+}
+
+export default Header;
