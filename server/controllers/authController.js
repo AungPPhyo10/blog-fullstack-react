@@ -63,9 +63,11 @@ export const loginUser = async (req,res) => {
 
 export const userProfile = async (req,res) => {
     const {token} = req.cookies;
+    console.log(token);
 
     jwt.verify(token, secret, {}, (err, info) => {
-        if (err) throw err;
+        if (err) return res.status(403).json({ message: 'Token invalid.' });
+
         return res.json(info);
     })
 

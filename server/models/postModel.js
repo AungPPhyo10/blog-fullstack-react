@@ -1,22 +1,13 @@
 import mongoose from 'mongoose';
 
 const PostSchema = mongoose.Schema({
-  title : String,
-  message : String,
-  creator : String,
-  tags : [String],
-  selectedFile : String,
-  likeCount : {
-    type : Number,
-    default : 0
-  },
-  createdAt : {
-    type : Date,
-    default: new Date()
-  }
+  title: {type: String, required: true},
+  summary: {type: String, required: true},
+  content: {type: String, required: true},
+  cover: {type: String, required: true}
 })
 
 // make a mongoose model from the schema
-const PostModel = mongoose.model('PostMessage', PostSchema);
+const PostModel = mongoose.model('Post', PostSchema);
 
 export default PostModel;

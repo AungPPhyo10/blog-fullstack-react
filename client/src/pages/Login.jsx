@@ -53,7 +53,7 @@ const Login = () => {
       </Form.Group>
 
       <div className="d-flex justify-content-center">
-        <Button variant="dark" type="submit">Login</Button>
+        <Button type="submit" className="btn btn-primary">Login</Button>
       </div>
     </Form>
   )

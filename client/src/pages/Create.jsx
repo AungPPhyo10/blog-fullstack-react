@@ -27,18 +27,18 @@ const Create = () => {
   const [title, setTitle] = useState("");
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
-  const [file, setFile] = useState("");
+  const [files, setFiles] = useState("");
   
-  function createNewPost(e) {    
+  async function createNewPost(e) {    
     e.preventDefault();
 
     const data = new FormData();
     data.set('title', title);
     data.set('summary', summary);
     data.set('content', content);
-    data.set('file', file);
+    data.set('file', files[0]);
 
-    const response = fetch('http://localhost:3000/posts', {
+    const response = await fetch('http://localhost:3000/api/posts', {
       method: 'POST',
       body: data, 
     })
@@ -54,12 +54,12 @@ const Create = () => {
 
       <Form.Group className="mb-3">
         <Form.Label>Summary</Form.Label>
-        <Form.Control type="text" value={title} onChange={e => setSummary(e.target.value)}/>
+        <Form.Control type="text" value={summary} onChange={e => setSummary(e.target.value)}/>
       </Form.Group>
 
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Choose Image</Form.Label>
-        <Form.Control type="file" onChange={e => setFile(e.target.files)} />
+        <Form.Control type="file" onChange={e => setFiles(e.target.files)} />
       </Form.Group>
 
       <ReactQuill className="mb-4" 
@@ -70,8 +70,10 @@ const Create = () => {
       />
 
       <div className="d-flex justify-content-center">
-        <Button variant="dark" type="submit">Create</Button>
+          <Button type="reset" className="me-3 btn btn-danger">Reset</Button>
+          <Button type="submit" className="btn btn-success">Create</Button>
       </div>
+      
     </Form>
   )
 }

@@ -1,13 +1,12 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import multer from 'multer';        // for image uploads
+import cookieParser from 'cookie-parser';   
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express(); 
-
-// define path for file uploads
-const upload = multer({dest: 'uploads/'}); 
 
 // ===== ESSENTIAL FOR SHARING THE API with cors policy ========
 app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
@@ -19,7 +18,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 // https://www.mongodb.com/cloud/atlas
-const CONNECTION_URL = 'mongodb+srv://aungphyoe9190:AungPP1010@cluster-mongo.ceetcw3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster-Mongo' 
+const CONNECTION_URL = process.env.MONGODB_URI ;
 const PORT = process.env.PORT || 3000;
 
 mongoose.connect(CONNECTION_URL)

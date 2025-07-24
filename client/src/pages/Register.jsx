@@ -41,7 +41,7 @@ const Register = () => {
       </Form.Group>
 
       <div className="d-flex justify-content-center">
-        <Button variant="dark" type="submit">Register</Button>
+        <Button type="submit" className="btn btn-primary">Register</Button>
       </div>
     </Form>
   )
