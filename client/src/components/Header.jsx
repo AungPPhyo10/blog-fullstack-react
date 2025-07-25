@@ -17,9 +17,13 @@ const Header = () => {
       credentials: 'include',
     })
     .then(response => {
-      response.json().then(userInfo => 
-        setUserInfo(userInfo)
-      )
+      response.json().then(userInfo => {
+        if (userInfo.message == "Token invalid.") {
+          alert('Please log in first')
+          navigate('/login');
+        } else
+          setUserInfo(userInfo)
+      })
     })
 
   }, [])

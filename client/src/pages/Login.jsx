@@ -33,13 +33,6 @@ const Login = () => {
       setRedirect(true);
     }
 
-    // if (response.status == 200) {
-    //   response.json().then(userInfo => { 
-    //     console.log('userInfo '+userInfo)
-    //     setUserInfo(userInfo)
-    //     setRedirect(true)
-    //   })
-
   }
 
   if (redirect) {

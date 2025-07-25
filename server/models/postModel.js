@@ -5,6 +5,8 @@ const PostSchema = mongoose.Schema({
   summary: {type: String, required: true},
   content: {type: String, required: true},
   cover: {type: String, required: true}
+}, {
+  timestamps: true,
 })
 
 // make a mongoose model from the schema

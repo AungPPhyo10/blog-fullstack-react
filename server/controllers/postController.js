@@ -3,9 +3,9 @@ import fs from 'fs';
 
 export const getPosts = async (req,res) => {
     try {
-        const postMessages = await PostModel.find();
+        const posts = await PostModel.find();
 
-        return res.status(200).json(postMessages);
+        return res.status(200).json(posts);
 
     } catch (error) {
         return res.status(404).json({message : error.message})
@@ -14,20 +14,21 @@ export const getPosts = async (req,res) => {
 
 export const createPost = async (req,res) => {
     const {originalname, path} = req.file;       // retake the original name of the file
+
     const parts = originalname.split('.');
-    const ext = parts[parts.length - 1];
+    const ext = parts[1];
     const newPath = path+'.'+ext;
     fs.renameSync(path, newPath);
 
     const {title, summary, content} = req.body;
-    // PostModel.create({
-
-    // })
-
-    res.status(200).json({title, content, summary});
-    
+    const postDoc = await PostModel.create({
+        title, summary, content, 
+        cover: newPath,
+    })
+    res.status(200).json(postDoc);
 }
-// req.file = {
+
+//      req.file = {
 //     "fieldname": "file",
 //     "originalname": "8.JPG",
 //     "encoding": "7bit",

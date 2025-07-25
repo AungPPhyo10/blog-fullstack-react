@@ -1,10 +1,11 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {formatISO9075} from 'date-fns';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 
-const Post = () => {
+const Post = ({title, summary, createdAt, cover, content}) => {
   return (
     <Card border="secondary" className="mb-3 p-2">
       <Row className="g-0">
@@ -17,16 +18,16 @@ const Post = () => {
         </Col>
         <Col md={8}>
           <Card.Body>
-            <Card.Title>Card Title</Card.Title>
+            <Card.Title>{title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               <a href="#" className="author">Josh</a>
               <br/>
-              <time>2023-01-06 16:50</time>
+              <time>
+                { formatISO9075(new Date(createdAt)) }
+              </time>
             </Card.Subtitle>
             <Card.Text>
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
+              {summary}
             </Card.Text>
           </Card.Body>
         </Col>

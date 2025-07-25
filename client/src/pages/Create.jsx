@@ -3,6 +3,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {useState, useEffect, useContext} from 'react'; 
+import {Navigate} from 'react-router-dom';
+
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -28,7 +30,8 @@ const Create = () => {
   const [summary, setSummary] = useState("");
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
-  
+  const [redirect, setRedirect] = useState("");
+
   async function createNewPost(e) {    
     e.preventDefault();
 
@@ -42,24 +45,31 @@ const Create = () => {
       method: 'POST',
       body: data, 
     })
+    if (response.ok) {
+      setRedirect(true);
+    } else alert('Something went wrong')
   }
 
+  if (redirect) {
+    alert('Post created successfully')
+    return <Navigate to={'/'}/>
+  }
   return (
     <Form onSubmit={createNewPost} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary">
 
       <Form.Group className="mb-3">
         <Form.Label>Blog Title</Form.Label>
-        <Form.Control type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+        <Form.Control type="text" value={title} required onChange={e => setTitle(e.target.value)}/>
       </Form.Group>
 
       <Form.Group className="mb-3">
         <Form.Label>Summary</Form.Label>
-        <Form.Control type="text" value={summary} onChange={e => setSummary(e.target.value)}/>
+        <Form.Control type="text" value={summary} required onChange={e => setSummary(e.target.value)}/>
       </Form.Group>
 
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>Choose Image</Form.Label>
-        <Form.Control type="file" onChange={e => setFiles(e.target.files)} />
+        <Form.Control type="file" required onChange={e => setFiles(e.target.files)} />
       </Form.Group>
 
       <ReactQuill className="mb-4" 
