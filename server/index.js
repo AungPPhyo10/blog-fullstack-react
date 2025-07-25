@@ -4,7 +4,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';   
 import dotenv from 'dotenv';
 
-dotenv.config();
+dotenv.config({debug: true});
 
 const app = express(); 
 

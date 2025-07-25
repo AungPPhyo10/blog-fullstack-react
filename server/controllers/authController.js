@@ -11,6 +11,8 @@ export const registerUser = async (req,res) => {
 
     if (!username || !password) {
         return res.status(400).json({message: 'Please provide username and password'})
+    } else if (password.length <= 5) {
+        return res.status(404).json({message: 'Password too short. Minimum 5 characters'})
     }
 
     try {
@@ -44,8 +46,12 @@ export const loginUser = async (req,res) => {
         const passwordOk = bcrypt.compareSync(password, userDoc.password);
 
         if (passwordOk) {
+            // callback function with the signed token
             jwt.sign({username, id: userDoc._id}, secret, {}, (err, token) => {
+
                 if (err) throw err;
+
+                // send the token as response inside the cookie
                 res.cookie('token', token).json({
                     id: userDoc._id,
                     username,

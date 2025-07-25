@@ -23,13 +23,22 @@ const Login = () => {
       credentials: 'include'
     })
     
-    if (response.status == 200) {
-      response.json().then(userInfo => { 
-        setUserInfo(userInfo)
-        setRedirect(true)
-      })
-    
-    } else alert('Login failed!');
+    const result = await response.json();
+
+    if (!response.ok) {
+      alert(result.message || 'Unknown error occurred');
+    } else {
+      alert('Login successful');
+      setUserInfo(result);
+      setRedirect(true);
+    }
+
+    // if (response.status == 200) {
+    //   response.json().then(userInfo => { 
+    //     console.log('userInfo '+userInfo)
+    //     setUserInfo(userInfo)
+    //     setRedirect(true)
+    //   })
 
   }
 

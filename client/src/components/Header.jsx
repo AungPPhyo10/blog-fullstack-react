@@ -31,6 +31,7 @@ const Header = () => {
       credentials: 'include'
     })
     .then(() => {
+      alert('Logout successful');
       setUserInfo(null);
       navigate('/');
     })
@@ -38,8 +39,7 @@ const Header = () => {
   }
 
   return (
-    <div className="pb-4">
-      <Navbar className="px-4 border-1 header" >
+      <Navbar className="px-4 pb-4 border-1 header" >
           <Navbar.Brand as={Link} className="fw-bold linker" to="/">
             Blogzz
           </Navbar.Brand>
@@ -62,7 +62,6 @@ const Header = () => {
 
           </Nav>
       </Navbar>
-    </div>
   )
 }
 

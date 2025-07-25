@@ -1,11 +1,14 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {useNavigate} from 'react-router-dom';
 import {useState} from 'react';
 import Button from 'react-bootstrap/Button';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -17,10 +20,19 @@ const Register = () => {
       body: JSON.stringify({username, password}),
       headers: {'Content-Type':'application/json'}
     })
-    console.log(response);
-    if (response.status == 200) {
+
+    const result = await response.json();
+    
+    if (!response.ok) {
+      alert(result.message);
+    } else {
       alert('Registration success! Proceed to login');
-    } else alert('Registration failed!')
+      navigate('/login');
+    }
+    // console.log(response);
+    // if (response.status == 200) {
+    //   alert('Registration success! Proceed to login');
+    // } else alert('Registration failed!')
 
   }
 
