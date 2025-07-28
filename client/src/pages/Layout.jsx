@@ -25,7 +25,9 @@ const Layout = () => {
         {
           posts.length == 0 ? <div className="d-block p-2 text-center text-danger">No Posts here yet...</div> :
           posts.map(post => 
-            <Col><Post {...post}/></Col>
+            <Col key={post._id}>
+              <Post {...post}/>
+            </Col>
           )
         }
       </Row> 

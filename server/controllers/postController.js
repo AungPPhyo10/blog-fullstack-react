@@ -1,9 +1,17 @@
 import PostModel from '../models/postModel.js';
+import UserModel from '../models/authModel.js';
+
+import jwt from 'jsonwebtoken';
 import fs from 'fs';
+const secret = 'secret_key';
 
 export const getPosts = async (req,res) => {
     try {
-        const posts = await PostModel.find();
+        // fetch the posts data along with the user's info
+        const posts = await PostModel.find()
+            .populate('author', 'username')
+            .sort({createdAt: -1})
+            .limit(20)
 
         return res.status(200).json(posts);
 
@@ -14,18 +22,28 @@ export const getPosts = async (req,res) => {
 
 export const createPost = async (req,res) => {
     const {originalname, path} = req.file;       // retake the original name of the file
+    const {token} = req.cookies;
 
     const parts = originalname.split('.');
     const ext = parts[1];
     const newPath = path+'.'+ext;
     fs.renameSync(path, newPath);
 
-    const {title, summary, content} = req.body;
-    const postDoc = await PostModel.create({
-        title, summary, content, 
-        cover: newPath,
-    })
-    res.status(200).json(postDoc);
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) return res.status(403).json({ message: 'Token invalid.' });
+
+        const {title, summary, content} = req.body;
+            const postDoc = await PostModel.create({
+                title, 
+                summary, 
+                content, 
+                cover: newPath,
+                author: info.id
+        })
+
+        res.status(200).json(postDoc);
+    }) 
+    
 }
 
 //      req.file = {

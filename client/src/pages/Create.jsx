@@ -44,9 +44,11 @@ const Create = () => {
     const response = await fetch('http://localhost:3000/api/posts', {
       method: 'POST',
       body: data, 
+      credentials: 'include'
     })
     if (response.ok) {
-      setRedirect(true);
+      setRedirect(true)
+      
     } else alert('Something went wrong')
   }
 

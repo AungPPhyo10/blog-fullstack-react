@@ -5,25 +5,26 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
 
-const Post = ({title, summary, createdAt, cover, content}) => {
+const Post = ({title, summary, cover, author, createdAt, content}) => {
   return (
     <Card border="secondary" className="mb-3 p-2">
       <Row className="g-0">
         <Col md={4}>
           <Card.Img
-            src="/vite.svg"
-            alt="Card image"
+            src={cover}
+            alt="Blog Image"
             style={{ height: '100%', objectFit: 'cover' }}
           />
         </Col>
         <Col md={8}>
           <Card.Body>
-            <Card.Title>{title}</Card.Title>
+            <Card.Title className="fw-bold">{title}</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
-              <a href="#" className="author">Josh</a>
-              <br/>
-              <time>
-                { formatISO9075(new Date(createdAt)) }
+              <p href="#" className="author text-primary">
+                {author.username}
+              </p>
+              <time className="text-danger">
+                { formatISO9075(new Date(createdAt)) }  
               </time>
             </Card.Subtitle>
             <Card.Text>
