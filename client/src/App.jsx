@@ -6,7 +6,8 @@ import {UserContextProvider} from './context/UserContext.jsx';
 import Layout from './pages/Layout';
 import Login from './pages/Login';
 import Create from './pages/Create';
-import Register from './pages/Register'
+import Register from './pages/Register';
+import PostPage from './pages/PostPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Layout/>} />
             <Route path="/login" element={<Login/>} />
             <Route path="/create" element={<Create/>} />
+            <Route path="/post/:id" element={<PostPage/>}/>
             <Route path="/register" element={<Register/>} />
           </Routes>
           <Footer/>

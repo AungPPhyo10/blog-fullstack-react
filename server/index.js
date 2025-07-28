@@ -3,6 +3,11 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';   
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config({debug: true});
 
@@ -10,6 +15,9 @@ const app = express();
 
 // ===== ESSENTIAL FOR SHARING THE API with cors policy ========
 app.use(cors({credentials: true, origin: 'http://localhost:5173'}));
+
+// ===== Serve static images from upload folder ========
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ===== INITIALIZE THE APP ========
 app.use(express.json());

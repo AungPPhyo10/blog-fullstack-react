@@ -48,7 +48,6 @@ export const loginUser = async (req,res) => {
         if (passwordOk) {
             // callback function with the signed token
             jwt.sign({username, id: userDoc._id}, secret, {}, (err, token) => {
-
                 if (err) throw err;
 
                 // send the token as response inside the cookie
@@ -69,9 +68,11 @@ export const loginUser = async (req,res) => {
 
 export const userProfile = async (req,res) => {
     const {token} = req.cookies;
+    if (!token) 
+        return res.status(401).json({ message: 'No token found' });
 
     jwt.verify(token, secret, {}, (err, info) => {
-        if (err) return res.status(403).json({ message: 'Token invalid.' });
+        if (err) return res.status(403).json({ message: 'Token invalid' });
 
         return res.status(200).json(info);
     })

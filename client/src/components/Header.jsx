@@ -18,8 +18,10 @@ const Header = () => {
     })
     .then(response => {
       response.json().then(userInfo => {
-        if (userInfo.message == "Token invalid.") {
-          alert('Please log in first')
+        if (userInfo.message == "Token invalid") {
+          alert('Invalid token detected! Log in again')
+          navigate('/login');
+        } else if (userInfo.message == "No token found") {
           navigate('/login');
         } else
           setUserInfo(userInfo)
@@ -43,29 +45,29 @@ const Header = () => {
   }
 
   return (
-      <Navbar className="px-4 pb-4 border-1 header" >
-          <Navbar.Brand as={Link} className="fw-bold linker" to="/">
-            Blogzz
-          </Navbar.Brand>
-          <Nav className="ms-auto">
-            {/* use as property to make the react-bootstrap components behaviours */}
-            
-            {userInfo && (
-              <>
-                <Nav.Link as={Link} to="create" className="linker me-1">Create Post</Nav.Link>
-                <Nav.Link onClick={logout} className="linker me-1 text-danger fw-bold">Log Out</Nav.Link>
-              </>
-            )}
+    <Navbar className="px-4 pb-4 border-1 header" >
+        <Navbar.Brand as={Link} className="fw-bold linker" to="/">
+          Blogzz
+        </Navbar.Brand>
+        <Nav className="ms-auto">
+          {/* use as property to make the react-bootstrap components behaviours */}
+          
+          {userInfo.username && (
+            <>
+              <Nav.Link as={Link} to="create" className="linker me-1">Create Post</Nav.Link>
+              <Nav.Link onClick={logout} className="linker me-1 text-danger fw-bold">Log Out</Nav.Link>
+            </>
+          )}
 
-            {!userInfo && (
-              <>
-                <Nav.Link as={Link} to="/login" className="linker me-1">Login</Nav.Link>
-                <Nav.Link as={Link} to="/register" className="linker">Register</Nav.Link>
-              </>
-            )}
+          {!userInfo.username && (
+            <>
+              <Nav.Link as={Link} to="/login" className="linker me-1">Login</Nav.Link>
+              <Nav.Link as={Link} to="/register" className="linker">Register</Nav.Link>
+            </>
+          )}
 
-          </Nav>
-      </Navbar>
+        </Nav>
+    </Navbar>
   )
 }
 

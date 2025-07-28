@@ -20,6 +20,21 @@ export const getPosts = async (req,res) => {
     }
 }
 
+export const getSinglePost = async (req,res) => {
+    const id = req.params.id;
+
+    try {
+        // fetch a single post data along with the user's info
+        const post = await PostModel.findById(id)
+            .populate('author', 'username')
+
+        return res.status(200).json(post);
+
+    } catch (error) {
+        return res.status(404).json({message : error.message})
+    }
+}
+
 export const createPost = async (req,res) => {
     const {originalname, path} = req.file;       // retake the original name of the file
     const {token} = req.cookies;
