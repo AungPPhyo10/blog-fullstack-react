@@ -24,7 +24,26 @@ a {
     
 }
 
+.post-card:hover {
+    opacity: 80%;
+    cursor:pointer;
+}
 
+.post-image {
+    height: 200px;
+    width: 100%;
+    object-fit:cover;
+    margin-bottom: 20px;
+    border-radius:8px;
+    border-style:groove;
+}
+
+.post-header {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
 
 
 

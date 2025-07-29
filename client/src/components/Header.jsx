@@ -39,7 +39,7 @@ const Header = () => {
     .then(() => {
       alert('Logout successful');
       setUserInfo(null);
-      navigate('/');
+      navigate('/login');
     })
     .catch(error => console.log(error)) 
   }

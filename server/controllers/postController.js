@@ -42,7 +42,7 @@ export const createPost = async (req,res) => {
     const parts = originalname.split('.');
     const ext = parts[1];
     const newPath = path+'.'+ext;
-    fs.renameSync(path, newPath);
+    fs.renameSync(path, newPath);       // blocking function, needs to be inside async function 
 
     jwt.verify(token, secret, {}, async (err, info) => {
         if (err) return res.status(403).json({ message: 'Token invalid.' });
@@ -61,7 +61,7 @@ export const createPost = async (req,res) => {
     
 }
 
-//      req.file = {
+// req.file = {
 //     "fieldname": "file",
 //     "originalname": "8.JPG",
 //     "encoding": "7bit",

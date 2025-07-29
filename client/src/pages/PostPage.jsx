@@ -1,5 +1,9 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import {formatISO9075} from 'date-fns';
+import Image from 'react-bootstrap/Image';
 import {useEffect, useState} from 'react';
 import {useParams} from 'react-router-dom';
 
@@ -14,6 +18,7 @@ const PostPage = () => {
                 setPostInfo(postInfo)
             })
         })
+        .catch(err => console.error(err))
     }, [])
 
     if (!postInfo) 
@@ -21,12 +26,21 @@ const PostPage = () => {
     
     return (
         <div className="mx-3">
-            <img 
+            <Container className="post-header">
+                <h2>{postInfo.title}</h2>
+                <p className="text-primary fw-bold">{postInfo.author.username}</p>
+                <time className="text-danger mb-2">{ formatISO9075(new Date(postInfo.createdAt)) }</time>
+                <Button variant="primary" size="sm">
+                    Edit Post
+                </Button>
+            </Container>
+            
+            <Image 
+                className="post-image"
                 src={'http://localhost:3000/'+postInfo.cover}
                 alt="Blog Image"
-                style={{ height: '100px', width: '100px', objectFit: 'cover' }}
             />
-            <h2>{postInfo.title}</h2>
+
             <div dangerouslySetInnerHTML={{__html:postInfo.content}}/>
         </div>
     )
