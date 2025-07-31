@@ -1,5 +1,4 @@
 import PostModel from '../models/postModel.js';
-import UserModel from '../models/authModel.js';
 
 import jwt from 'jsonwebtoken';
 import fs from 'fs';
@@ -71,3 +70,29 @@ export const createPost = async (req,res) => {
 //     "path": "uploads\\fdc3430cb2ee58be81cc9ed1609e209a",
 //     "size": 4044621
 // }
+
+export const updatePost = async (req,res) => {
+    const {originalname, path} = req.file;       // retake the original name of the file
+    const {token} = req.cookies;
+
+    const parts = originalname.split('.');
+    const ext = parts[1];
+    const newPath = path+'.'+ext;
+    fs.renameSync(path, newPath);       // blocking function, needs to be inside async function 
+
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) return res.status(403).json({ message: 'Token invalid.' });
+
+        const {title, summary, content} = req.body;
+            const postDoc = await PostModel.create({
+                title, 
+                summary, 
+                content, 
+                cover: newPath,
+                author: info.id
+        })
+
+        res.status(200).json(postDoc);
+    }) 
+    
+}

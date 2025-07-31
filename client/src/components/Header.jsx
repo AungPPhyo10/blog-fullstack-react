@@ -52,17 +52,17 @@ const Header = () => {
         <Nav className="ms-auto">
           {/* use as property to make the react-bootstrap components behaviours */}
           
-          {userInfo.username && (
-            <>
-              <Nav.Link as={Link} to="create" className="linker me-1">Create Post</Nav.Link>
-              <Nav.Link onClick={logout} className="linker me-1 text-danger fw-bold">Log Out</Nav.Link>
-            </>
-          )}
-
           {!userInfo.username && (
             <>
               <Nav.Link as={Link} to="/login" className="linker me-1">Login</Nav.Link>
               <Nav.Link as={Link} to="/register" className="linker">Register</Nav.Link>
+            </>
+          )}
+          
+          {userInfo.username && (
+            <>
+              <Nav.Link as={Link} to="create" className="linker me-1">Create Post</Nav.Link>
+              <Nav.Link onClick={logout} className="linker me-1 text-danger fw-bold">Log Out</Nav.Link>
             </>
           )}
 

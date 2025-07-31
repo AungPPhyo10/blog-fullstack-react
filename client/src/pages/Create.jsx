@@ -4,26 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {useState, useEffect, useContext} from 'react'; 
 import {Navigate} from 'react-router-dom';
-
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, false] }],
-    ['bold', 'italic', 'underline','strike', 'blockquote'],
-    [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-    ['link', 'image'],
-    ['clean']
-  ],
-}
-
-const formats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'indent',
-  'link', 'image'
-]
+import Editor from '../components/Editor';
 
 const Create = () => {
   const [title, setTitle] = useState("");
@@ -74,10 +55,8 @@ const Create = () => {
         <Form.Control type="file" required onChange={e => setFiles(e.target.files)} />
       </Form.Group>
 
-      <ReactQuill className="mb-4" 
-        value={content} 
-        modules={modules} 
-        formats={formats}
+      <Editor className="mb-4" required
+        value={content}
         onChange={newValue => setContent(newValue)}
       />
 
