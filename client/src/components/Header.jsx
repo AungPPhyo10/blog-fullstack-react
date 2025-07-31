@@ -47,11 +47,11 @@ const Header = () => {
   return (
     <Navbar className="px-4 pb-4 border-1 header" >
         <Navbar.Brand as={Link} className="fw-bold linker" to="/">
+          {/* use as property to make the react-bootstrap components behaviours */}
           Blogzz
         </Navbar.Brand>
+
         <Nav className="ms-auto">
-          {/* use as property to make the react-bootstrap components behaviours */}
-          
           {!userInfo.username && (
             <>
               <Nav.Link as={Link} to="/login" className="linker me-1">Login</Nav.Link>

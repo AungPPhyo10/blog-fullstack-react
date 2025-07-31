@@ -1,3 +1,5 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 
@@ -18,9 +20,9 @@ const formats = [
   'link', 'image'
 ]
 
-const Editor = () => {
+const Editor = ({content, setContent}) => {
   return (
-    <ReactQuill modules={modules} formats={formats}/>
+    <ReactQuill modules={modules} formats={formats} value={content} onChange={newValue => setContent(newValue)} className="mb-4"/>
   )
 }
 

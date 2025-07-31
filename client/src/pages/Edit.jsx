@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import {useParams, Link} from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {useState} from 'react'; 
@@ -12,6 +13,7 @@ const Create = () => {
   const [content, setContent] = useState("");
   const [files, setFiles] = useState("");
   const [redirect, setRedirect] = useState("");
+  const {id} = useParams();
 
   async function createNewPost(e) {    
     e.preventDefault();
@@ -22,8 +24,8 @@ const Create = () => {
     data.set('content', content);
     data.set('file', files[0]);
 
-    const response = await fetch('http://localhost:3000/api/posts', {
-      method: 'POST',
+    const response = await fetch('http://localhost:3000/api/posts/'+id, {
+      method: 'PUT',
       body: data, 
       credentials: 'include'
     })
@@ -31,21 +33,21 @@ const Create = () => {
       setRedirect(true)
       
     } else {
-      response.json().then(msg => 
-        console.log(msg)
-      )
-      alert('Something went wrong')
+        response.json().then(msg => 
+            console.log(msg)
+        )
+        alert('Something went wrong')
     }
   }
 
   if (redirect) {
-    alert('Post created successfully')
+    alert('Post updated successfully')
     return <Navigate to={'/'}/>
   }
   return (
     <Form onSubmit={createNewPost} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary">
-      <h3 className="d-block my-2 text-primary text-center">Create a new Post</h3>
-
+      <h3 className="d-block my-2 text-primary text-center">Edit Post</h3>
+      
       <Form.Group className="mb-3">
         <Form.Label>Blog Title</Form.Label>
         <Form.Control type="text" value={title} required onChange={e => setTitle(e.target.value)}/>
