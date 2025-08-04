@@ -93,57 +93,73 @@ export const updatePost = async (req,res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    // Delete old cover image
-    if (post.cover) {
-      const oldImagePath = path.resolve(post.cover);    // Convert to absolute path
-      fs.unlink(oldImagePath, (err) => {
-        if (err) console.error("Failed to delete old image:", err);
-      });
-    }
-
-    const { originalname, path: tempPath } = req.file;      // retake the origianl name of the file
-    const ext = originalname.split('.').pop();
-    const newPath = tempPath + '.' + ext;
-    fs.renameSync(tempPath, newPath);       // blocking function, needs to be inside async function 
-
     jwt.verify(token, secret, {}, async (err, info) => {
-        if (err) return res.status(403).json({ message: 'Token invalid.' });
+        if (err) return res.status(403).json({ message: 'Token invalid.' })
 
         const {title, summary, content} = req.body;
 
-        const postDoc = await PostModel.updateOne({_id:id} , {
-            title, 
-            summary, 
-            content, 
-            cover: newPath,
-            author: info.id
-        })
+        const authorDoc = await PostModel.findById({_id:id});
+        const isAuthor = JSON.stringify(authorDoc.author) === JSON.stringify(info.id);
 
-        res.status(200).json(postDoc);
+        if (isAuthor) {
+            // Delete old cover image
+            if (post.cover) {
+            const oldImagePath = path.resolve(post.cover);    // Convert to absolute path
+            fs.unlink(oldImagePath, (err) => {
+                if (err) console.error("Failed to delete old image:", err);
+            });
+            }
+
+            const { originalname, path: tempPath } = req.file;      // retake the origianl name of the file
+            const ext = originalname.split('.').pop();
+            const newPath = tempPath + '.' + ext;
+            fs.renameSync(tempPath, newPath);       // blocking function, needs to be inside async function 
+
+            const postDoc = await PostModel.updateOne({_id:id} , {
+                title, 
+                summary, 
+                content, 
+                cover: newPath,
+                author: info.id
+            })
+            res.status(200).json(postDoc);
+
+        } else 
+            res.status(403).json({message: "You are not the author of this post"})
     })    
 }
 
 export const deletePost = async (req,res) => {
     const id = req.params.id;
-
+    const {token} = req.cookies;
+    
     const post = await PostModel.findById(id);
-    if (!post) {
-      return res.status(404).json({ message: "Post not found." });
-    }
+    if (!post) return res.status(404).json({ message: "Post not found." });
 
-    if (post.cover) {
-      const imagePath = path.resolve(post.cover);
-      fs.unlink(imagePath, (err) => {
-        if (err) console.error("Failed to delete old image:", err);
-      });
-    }
+    jwt.verify(token, secret, {}, async (err, info) => {
+        if (err) return res.status(403).json(err)
 
-    try {
-        await PostModel.deleteOne({_id:id})
+        const authorDoc = await PostModel.findById({_id:id});
+        const isAuthor = JSON.stringify(authorDoc.author) === JSON.stringify(info.id);
 
-        return res.status(200).json({message: "Post successfully deleted!"});
-        
-    } catch (error) {
-        return res.status(404).json({message : error.message})
-    }
+        if (isAuthor) {
+            if (post.cover) {
+                const imagePath = path.resolve(post.cover);
+                fs.unlink(imagePath, (err) => {
+                    if (err) console.error("Failed to delete old image:", err);
+                });
+            }
+
+            try {
+                await PostModel.deleteOne({_id:id})
+
+                return res.status(200).json({message: "Post successfully deleted!"});
+            } catch (error) {
+                return res.status(404).json({message : error.message})
+            }
+
+        } else 
+            res.status(403).json({message: "You are not the author of this post"})
+    })  
+
 }

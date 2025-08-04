@@ -1,13 +1,20 @@
-body {
-    background-color:ghostwhite !important;
-    min-height:100vh;
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: ghostwhite !important;
+  display: flex;
+  flex-direction: column;
 }
 
-main {
+body {
+    flex: 1;
+}
+
+.content {
     max-width: 700px;
     margin:0 auto;
-    padding-right: 1rem;
-    padding-left: 1rem;
+    padding: 0 1rem;
+    flex: 1;
 }
 
 a {

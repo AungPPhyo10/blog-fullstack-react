@@ -22,6 +22,7 @@ const Header = () => {
           alert('Invalid token detected! Log in again')
           navigate('/login');
         } else if (userInfo.message == "No token found") {
+          alert('Access denied!')
           navigate('/login');
         } else
           setUserInfo(userInfo)
@@ -37,8 +38,8 @@ const Header = () => {
       credentials: 'include'
     })
     .then(() => {
-      alert('Logout successful');
-      setUserInfo(null);
+      alert('Logged out successfully');
+      setUserInfo({});
       navigate('/login');
     })
     .catch(error => console.log(error)) 
@@ -48,6 +49,9 @@ const Header = () => {
     <Navbar className="px-4 pb-4 border-1 header" >
         <Navbar.Brand as={Link} className="fw-bold linker" to="/">
           {/* use as property to make the react-bootstrap components behaviours */}
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+          </svg>
           Blogzz
         </Navbar.Brand>
 

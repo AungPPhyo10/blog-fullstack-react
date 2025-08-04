@@ -31,12 +31,11 @@ const Create = () => {
     })
     if (response.ok) {
       setRedirect(true)
-      
     } else {
         response.json().then(msg => 
-            console.log(msg)
+          alert(msg.message)
         )
-        alert('Something went wrong')
+        
     }
   }
 

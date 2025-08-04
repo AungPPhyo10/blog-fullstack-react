@@ -14,7 +14,8 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-      <main>
+    <>
+      <main className="content">
         <UserContextProvider>
           <Header/>
           <Routes>
@@ -24,11 +25,12 @@ function App() {
             <Route path="/post/:id" element={<PostPage/>}/>
             <Route path="/edit/:id" element={<Edit/>}/>
             <Route path="/register" element={<Register/>} />
-          </Routes>
-          <Footer/>
+          </Routes>     
         </UserContextProvider>
-        
       </main>
+      <Footer/>
+    </>
+      
   )
 }
 

@@ -50,8 +50,12 @@ export const loginUser = async (req,res) => {
             jwt.sign({username, id: userDoc._id}, secret, {}, (err, token) => {
                 if (err) throw err;
 
-                // send the token as response inside the cookie
-                res.cookie('token', token).json({
+                // send the token as response inside the cookie, httpOnly cookie with a 6 hour expiry time
+                res.cookie('token', token, {
+                    httpOnly: true,
+                    sameSite: 'strict',
+                    maxAge: 6*60*60*1000
+                }).json({
                     id: userDoc._id,
                     username,
                 });
@@ -80,5 +84,7 @@ export const userProfile = async (req,res) => {
 }
 
 export const logout = async (req,res) => {
-    res.cookie('token', '').json('ok');
+    res.clearCookie('token');
+    res.json('ok');
+
 }
