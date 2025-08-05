@@ -54,6 +54,7 @@ const PostPage = () => {
 
     return (
         <div className="mx-3">
+            <Button as={Link} to={'/'} variant="warning" className="mb-2">Go Back</Button>
             <Container className="post-header">
                 <h2>{postInfo.title}</h2>
                 <p className="text-primary fw-bold">{postInfo.author.username}</p>

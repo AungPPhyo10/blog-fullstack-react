@@ -7,12 +7,14 @@ const salt = bcrypt.genSaltSync(10);
 const secret = 'secret_key';
 
 export const registerUser = async (req,res) => {
-    const {username, password} = req.body;
+    const {username, password, repassword} = req.body;
 
-    if (!username || !password) {
+    if (!username || !password || !repassword) {
         return res.status(400).json({message: 'Please provide username and password'})
-    } else if (password.length <= 5) {
+    } else if (password.length < 5) {
         return res.status(404).json({message: 'Password too short. Minimum 5 characters'})
+    } else if (password != repassword) {
+        return res.status(400).json({message: 'Passwords do not match'})
     }
 
     try {

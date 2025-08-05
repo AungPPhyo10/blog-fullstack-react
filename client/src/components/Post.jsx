@@ -9,7 +9,7 @@ import Card from 'react-bootstrap/Card';
 const Post = ({title, summary, cover, author, createdAt, _id}) => {
   return (
     <Link to={`/post/${_id}`}>
-      <Card border="secondary" className="mb-3 p-2 post-card">
+      <Card border="secondary" className="mb-3 p-2 post-card bg-light">
         <Row className="g-0">
           <Col md={4}>
             <Card.Img

@@ -6,6 +6,8 @@ import Form from 'react-bootstrap/Form';
 import {useState} from 'react'; 
 import {Navigate} from 'react-router-dom';
 import Editor from '../components/Editor';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const Create = () => {
   const [title, setTitle] = useState("");
@@ -44,9 +46,12 @@ const Create = () => {
     return <Navigate to={'/'}/>
   }
   return (
-    <Form onSubmit={createNewPost} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary">
-      <h3 className="d-block my-2 text-primary text-center">Edit Post</h3>
-      
+    <Form onSubmit={createNewPost} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary bg-light">
+      <Row className="align-middle mb-2">
+        <Col sm="5"><Button as={Link} to={'/'} variant="warning">Go Back</Button></Col>
+        <Col sm="auto"><h3 className="d-block my-2 text-primary text-center">Edit Post</h3></Col>
+      </Row>
+        
       <Form.Group className="mb-3">
         <Form.Label>Blog Title</Form.Label>
         <Form.Control type="text" value={title} required onChange={e => setTitle(e.target.value)}/>

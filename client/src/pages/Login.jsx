@@ -39,7 +39,7 @@ const Login = () => {
     return <Navigate to={'/'} />
   }
   return (
-    <Form onSubmit={handle_login} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary">
+    <Form onSubmit={handle_login} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary bg-light">
       <h2 className="d-block text-center fw-bold mb-4">Login</h2>
 
       <Form.Group className="mb-3">

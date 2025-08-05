@@ -11,13 +11,14 @@ const Register = () => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [repassword, setRePassword] = useState('');
 
   async function handle_register(e) {
     e.preventDefault();
 
     const response = await fetch('http://localhost:3000/api/register' , {
       method: 'POST',
-      body: JSON.stringify({username, password}),
+      body: JSON.stringify({username, password, repassword}),
       headers: {'Content-Type':'application/json'}
     })
 
@@ -37,7 +38,7 @@ const Register = () => {
   }
 
   return (
-    <Form onSubmit={handle_register} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary">
+    <Form onSubmit={handle_register} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary bg-light">
       <h2 className="d-block text-center fw-bold mb-4">Register New Account</h2>
       
       <Form.Group className="mb-3">
@@ -49,6 +50,12 @@ const Register = () => {
       <Form.Group className="mb-3">
         <FloatingLabel label="Enter Password">
           <Form.Control type="password" placeholder="Enter Password" value={password} onChange={e => setPassword(e.target.value)} />
+        </FloatingLabel>
+      </Form.Group>
+
+      <Form.Group className="mb-3">
+        <FloatingLabel label="Confirm Password">
+          <Form.Control type="password" placeholder="Confirm Password" value={repassword} onChange={e => setRePassword(e.target.value)} />
         </FloatingLabel>
       </Form.Group>
 

@@ -43,7 +43,7 @@ const Create = () => {
     return <Navigate to={'/'}/>
   }
   return (
-    <Form onSubmit={createNewPost} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary">
+    <Form onSubmit={createNewPost} className="p-4 mx-4 mb-4 border border-1 rounded border-secondary bg-light">
       <h3 className="d-block my-2 text-primary text-center">Create a new Post</h3>
 
       <Form.Group className="mb-3">
